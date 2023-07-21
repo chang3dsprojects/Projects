@@ -1,4 +1,3 @@
-# Projects
 
 # What this will contain?
 
