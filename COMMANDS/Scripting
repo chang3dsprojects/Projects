@@ -266,12 +266,6 @@ spawn(function()
 			sysmsg("[OWNER MSG] Ty for using the config!")
 		end
 	end
-	game:GetService("Players").ChildAdded:Connect(function(v)
-		if table.find(whitelist.Owners,v.UserId) then
-			sysmsg("[OWNER DETECTED]")
-		end
-	end)
-end)
 
 for i,v in pairs(game:GetService("Players"):GetChildren()) do
 	v.Chatted:Connect(function(a) 
