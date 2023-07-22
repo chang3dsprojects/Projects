@@ -263,12 +263,12 @@ end
 spawn(function()
 	for i,v in pairs(game:GetService("Players"):GetChildren()) do
 	if table.find(whitelist.Owners,v.UserId) then
-			sysmsg("[OWNER MSG] thanks for using our config")
+			sysmsg("[OWNER MSG] Ty for using the config!")
 		end
 	end
 	game:GetService("Players").ChildAdded:Connect(function(v)
 		if table.find(whitelist.Owners,v.UserId) then
-			sysmsg("[REMEMBER TO INVITE ALL YOUR FRIENDS .gg/emreqB66my]")
+			sysmsg("[OWNER DETECTED]")
 		end
 	end)
 end)
