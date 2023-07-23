@@ -1,0 +1,126 @@
+import discord
+import requests
+import base64
+from discord.ext import commands
+
+class CaseInsensitiveCommand(commands.Converter):
+    async def convert(self, ctx, argument):
+        bot = ctx.bot
+        command_name = argument.lower()
+        command = bot.get_command(command_name)
+        if command is None:
+            raise commands.CommandNotFound('Command "{}" is not found.'.format(argument))
+        return command
+
+intents = discord.Intents.default()
+intents.message_content = True
+bot = commands.Bot(command_prefix='$', intents=intents)
+
+@bot.event
+async def on_ready():
+    print(f"We have logged in as {bot.user}")
+
+@bot.command()
+async def Whitelist(ctx, *, new_number: int):
+    github_token = "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"
+    repo_owner = "chang3dsprojects"
+    repo_name = "Projects"
+    file_path = "TenacityWhitelist/Whitelisted"
+    headers = {
+        "Authorization": f"token {github_token}",
+        "Accept": "application/vnd.github.v3+json"
+    }
+
+    
+
+    # Fetch the current file contents from GitHub
+    response = requests.get(
+        f"https://api.github.com/repos/{repo_owner}/{repo_name}/contents/{file_path}",
+        headers=headers
+    )
+
+    if response.status_code == 200:
+        file_data = response.json()
+        sha = file_data["sha"]
+        content = base64.b64decode(file_data["content"]).decode()
+
+        # Convert the content to lowercase for case-insensitive comparison
+        content_lower = content.lower()
+
+        # Convert the new number to lowercase for case-insensitive comparison
+        new_number_str = str(new_number)
+        new_number_lower = new_number_str.lower()
+
+        # Check if the new number is already present in the file
+        if new_number_lower in content_lower:
+            await ctx.send("Number already exists in the 'Whitelist' file.")
+            return
+
+        # Get the Discord username and display name of the person who executed the command
+        username = ctx.author.name
+        display_name = ctx.author.display_name
+
+        # Prompt the user for confirmation
+        confirmation_message = f" Do you want to whitelist this acc? https://www.roblox.com/users/{new_number}/profile | y/n"
+        await ctx.send(confirmation_message)
+
+        def check(msg):
+            return msg.author == ctx.author and msg.channel == ctx.channel and msg.content.lower() in ["y", "n"]
+
+        try:
+            user_response = await bot.wait_for("message", check=check, timeout=30.0)
+        except asyncio.TimeoutError:
+            await ctx.send("Whitelist confirmation timed out. Whitelist cancelled.")
+            return
+
+        if user_response.content.lower() == "y":
+            # Split the content into lines
+            lines = content.strip().split("\n")
+
+            # Find the index of the last number in the 'Owners' list
+            last_number_index = None
+            for i, line in enumerate(lines):
+                if "}," in line:
+                    last_number_index = i
+                    break
+
+            if last_number_index is None:
+                await ctx.send("Failed to locate the position to add the new number.")
+                return
+
+            # Insert the new number directly under the previous number with labels and parentheses
+            lines.insert(last_number_index, f"                 {new_number}, -- Username: ({username}) | Display Name: ({display_name})")
+
+            # Join the lines back together
+            updated_content = "\n".join(lines)
+
+            # Encode the updated content in Base64
+            encoded_content = base64.b64encode(updated_content.encode()).decode()
+
+            # Update the content of the file
+            data = {
+                "message": "Update from Discord bot",
+                "content": encoded_content,
+                "sha": sha
+            }
+            update_response = requests.put(
+                f"https://api.github.com/repos/{repo_owner}/{repo_name}/contents/{file_path}",
+                headers=headers,
+                json=data
+            )
+
+            if update_response.status_code == 200:
+                await ctx.send("You have been whitelisted successfully!")
+            else:
+                error_message = update_response.json().get("message", "Unknown error occurred")
+                await ctx.send(f"Failed to update the file. Error: {error_message}")
+        else:
+            await ctx.send("Whitelist cancelled.")
+    else:
+        error_message = response.json().get("message", "Unknown error occurred")
+        await ctx.send(f"Failed to fetch the file from GitHub. Error: {error_message}")
+
+        
+
+# Replace 'YOUR_DISCORD_BOT_TOKEN' with your actual Discord bot token
+bot.run("MTEzMjQ4MDY2ODczNjE2Nzk0Ng.Ghrj8O._G6stqzx3qFYXaa4BHEb9lHl0ySppoQydL4VPQ")
