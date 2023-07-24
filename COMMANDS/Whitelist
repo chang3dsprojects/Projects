@@ -1,5 +1,4 @@
 local whitelist = {
-                 4848151501, 
     {AccountID = "4835147708", tags = {3}},
     {AccountID = "4845056090", tags = {3}},
     {AccountID = "1756643224", tags = {3}},
