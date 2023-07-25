@@ -2,10 +2,7 @@ local textChatService = game:GetService("TextChatService")
 
 local whitelisted = {
     {name = "SnoopyCalledMeFake", tags = {4}
-    {"name": "dreamercanbypassac", "tags": {2}},    {"name": "dreamercanbypassac", "tags": {2}},
 
-    {"name": "dreamercanbypassac", "tags": {2}},
-    {"name": "iamddosamawithnodd", "tags": {0}},},
 },
 
 
