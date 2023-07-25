@@ -4,8 +4,7 @@ local whitelisted = {
     {name = "SnoopyCalledMeFake", tags = {4}    {name = "dreamercanbypassac", tags = { 0 } },
     {name = "dreamercanbypassac", tags = { 0 },},
 },
-    {name = "IAmDDOsamaWithNoDD", tags = {6}},
-}
+
 
 local chatTags = {
     [1] = {name = "STAR", color = Color3.fromRGB(255, 0, 0)},
