@@ -2,19 +2,20 @@ local textChatService = game:GetService("TextChatService")
 
 local whitelisted = {
     {name = "SnoopyCalledMeFake", tags = {4}
-    {"name": "iamddosamawithnodd", "tags": 1},
     {"name": "iamddosamawithnodd", "tags": 1},},
     {name = "DreamerCanBypassAc", tags = {3}},
 }
 
 local chatTags = {
-    [1] = {name = "STAR", color = Color3.fromRGB(255, 0, 0)},
-    [2] = {name = "Kai", color = Color3.fromRGB(113, 3, 255)},
-    [3] = {name = "VAPE PRIVATE", color = Color3.fromRGB(255, 76.5, 76.5)},
-    [4] = {name = "0prime trollage", color = Color3.fromRGB(0, 0, 255)},
+    [1] = {name = "DEVELOPER", color = Color3.fromRGB(255, 0, 0)},
+    [2] = {name = "VAPE PRIVATE", color = Color3.fromRGB(113, 3, 255)},
+    [3] = {name = "PACKET PRIVATE", color = Color3.fromRGB(255, 76.5, 76.5)},
+    [4] = {name = "SnickTrix", color = Color3.fromRGB(0, 0, 255)},
     [5] = {name = "BOOSTER", color = Color3.fromRGB(244, 127, 255)},
-    [6] = {name = "BOOSTER", color = Color3.fromRGB(244, 127, 255)},
-    [6] = {name = "PACKET PRIVATE", color = Color3.fromRGB(244, 127, 255)},
+    [6] = {name = "AC MOD", color = Color3.fromRGB(244, 127, 255)},
+    [7] = {name = "STAR", color = Color3.fromRGB(244, 127, 255)},
+    [8] = {name = "0Prime", color = Color3.fromRGB(244, 127, 255)},
+    [9] = {name = "Changed", color = Color3.fromRGB(244, 127, 255)},
 }
 
 local function getPlayerTags(playerName)
