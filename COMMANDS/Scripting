@@ -161,6 +161,13 @@ local cmds = {
     end
 }
 
+	[".infping"] = function()
+		if not isPlayerAllowed(game.Players.LocalPlayer.Name) then
+			local thingy = settings().Network
+			thingy.IncomingReplicationLag = math.huge
+		end
+	end,
+
 textChatService.OnIncomingMessage = function(message)
     local properties = Instance.new("TextChatMessageProperties")
     if message.TextSource then
